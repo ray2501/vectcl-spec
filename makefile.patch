@@ -1,0 +1,81 @@
+--- Makefile.in.orig	2017-09-14 19:44:55.875378813 +0800
++++ Makefile.in	2017-09-14 19:46:02.375485877 +0800
+@@ -381,25 +381,25 @@
+ #========================================================================
+ 
+ install-lib-binaries: binaries
+-	@$(INSTALL_DATA_DIR) $(DESTDIR)$(pkglibdir)
++	@$(INSTALL_DATA_DIR) $(DESTDIR)$(libdir)
+ 	@list='$(lib_BINARIES)'; for p in $$list; do \
+ 	  if test -f $$p; then \
+-	    echo " $(INSTALL_LIBRARY) $$p $(DESTDIR)$(pkglibdir)/$$p"; \
+-	    $(INSTALL_LIBRARY) $$p $(DESTDIR)$(pkglibdir)/$$p; \
++	    echo " $(INSTALL_LIBRARY) $$p $(DESTDIR)$(libdir)/$$p"; \
++	    $(INSTALL_LIBRARY) $$p $(DESTDIR)$(libdir)/$$p; \
+ 	    stub=`echo $$p|sed -e "s/.*\(stub\).*/\1/"`; \
+ 	    if test "x$$stub" = "xstub"; then \
+-		echo " $(RANLIB_STUB) $(DESTDIR)$(pkglibdir)/$$p"; \
+-		$(RANLIB_STUB) $(DESTDIR)$(pkglibdir)/$$p; \
++		echo " $(RANLIB_STUB) $(DESTDIR)$(libdir)/$$p"; \
++		$(RANLIB_STUB) $(DESTDIR)$(libdir)/$$p; \
+ 	    else \
+-		echo " $(RANLIB) $(DESTDIR)$(pkglibdir)/$$p"; \
+-		$(RANLIB) $(DESTDIR)$(pkglibdir)/$$p; \
++		echo " $(RANLIB) $(DESTDIR)$(libdir)/$$p"; \
++		$(RANLIB) $(DESTDIR)$(libdir)/$$p; \
+ 	    fi; \
+ 	    ext=`echo $$p|sed -e "s/.*\.//"`; \
+ 	    if test "x$$ext" = "xdll"; then \
+ 		lib=`basename $$p|sed -e 's/.[^.]*$$//'`.lib; \
+ 		if test -f $$lib; then \
+-		    echo " $(INSTALL_DATA) $$lib $(DESTDIR)$(pkglibdir)/$$lib"; \
+-	            $(INSTALL_DATA) $$lib $(DESTDIR)$(pkglibdir)/$$lib; \
++		    echo " $(INSTALL_DATA) $$lib $(DESTDIR)$(libdir)/$$lib"; \
++	            $(INSTALL_DATA) $$lib $(DESTDIR)$(libdir)/$$lib; \
+ 		fi; \
+ 	    fi; \
+ 	  fi; \
+@@ -414,7 +414,7 @@
+ 	@if test "x$(SHARED_BUILD)" = "x1"; then \
+ 	    echo " Install pkgIndex.tcl $(DESTDIR)$(pkglibdir)"; \
+ 	    $(INSTALL_DATA) pkgIndex.tcl $(DESTDIR)$(pkglibdir); \
+-	    $(INSTALL_DATA) vectclConfig.sh $(DESTDIR)$(pkglibdir); \
++	    $(INSTALL_DATA) vectclConfig.sh $(DESTDIR)$(libdir); \
+ 	    echo " Install teapot.txt $(DESTDIR)$(pkglibdir)"; \
+ 	    $(INSTALL_DATA) teapot.txt $(DESTDIR)$(pkglibdir); \
+ 	fi
+--- pkgIndex.tcl.in.orig	2017-09-14 19:47:14.787598527 +0800
++++ pkgIndex.tcl.in	2017-09-14 19:47:21.243608391 +0800
+@@ -2,5 +2,5 @@
+ # Tcl package index file
+ #
+ package ifneeded @PACKAGE_NAME@ @PACKAGE_VERSION@ \
+-    "load -global [file join $dir @PKG_LIB_FILE@] @PACKAGE_NAME@;
++    "load -global @PKG_LIB_FILE@ @PACKAGE_NAME@;
+ 	source [file join $dir vexpr.tcl]"
+--- tclconfig/tcl.m4.orig	2017-09-14 21:36:22.838003050 +0800
++++ tclconfig/tcl.m4	2017-09-14 21:38:33.570189737 +0800
+@@ -3462,7 +3462,7 @@
+ 	# Strip off the leading "lib" and trailing ".a" or ".so"
+ 
+ 	tea_lib_name_lib=`echo ${$1_LIB_NAME}|sed -e 's/^lib//' -e 's/\.[[^.]]*$//' -e 's/\.so.*//'`
+-	$1_LIB_SPEC="-L${tea_lib_name_dir} -l${tea_lib_name_lib}"
++	$1_LIB_SPEC="-L/usr/lib64 -l${tea_lib_name_lib}"
+     fi
+ 
+     if test "x${$1_LIB_NAME}" = x ; then
+@@ -4073,11 +4073,11 @@
+ 	eval $1_STUB_LIB_FLAG="-l$1stub`echo ${PACKAGE_VERSION} | tr -d .`${DBGX}"
+     fi
+     $1_BUILD_LIB_SPEC="-L`pwd` ${$1_LIB_FLAG}"
+-    $1_LIB_SPEC="-L${pkglibdir} ${$1_LIB_FLAG}"
++    $1_LIB_SPEC="-L/usr/lib64 ${$1_LIB_FLAG}"
+     $1_BUILD_STUB_LIB_SPEC="-L`pwd` [$]{$1_STUB_LIB_FLAG}"
+-    $1_STUB_LIB_SPEC="-L${pkglibdir} [$]{$1_STUB_LIB_FLAG}"
++    $1_STUB_LIB_SPEC="-L/usr/lib64 [$]{$1_STUB_LIB_FLAG}"
+     $1_BUILD_STUB_LIB_PATH="`pwd`/[$]{PKG_STUB_LIB_FILE}"
+-    $1_STUB_LIB_PATH="${pkglibdir}/[$]{PKG_STUB_LIB_FILE}"
++    $1_STUB_LIB_PATH="/usr/lib64/[$]{PKG_STUB_LIB_FILE}"
+ 
+     AC_SUBST($1_BUILD_LIB_SPEC)
+     AC_SUBST($1_LIB_SPEC)
