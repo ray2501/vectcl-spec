@@ -55,7 +55,7 @@ This package contains development files for VecTcl.
 make 
 
 %install
-make DESTDIR=%{buildroot} pkglibdir=%tclscriptdir/%{name}%{version} install
+make DESTDIR=%{buildroot} pkglibdir=%tcl_noarchdir/%{name}%{version} install
 
 %clean
 rm -rf %buildroot
@@ -63,7 +63,7 @@ rm -rf %buildroot
 %files
 %defattr(-,root,root)
 /usr/lib64/libvectcl0.2.so
-/usr/share/tcl/vectcl0.2
+%tcl_noarchdir/%{name}%{version}
 
 %files devel
 %defattr(-,root,root)
