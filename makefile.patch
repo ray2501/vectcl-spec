@@ -79,3 +79,12 @@
  
      AC_SUBST($1_BUILD_LIB_SPEC)
      AC_SUBST($1_LIB_SPEC)
+--- vectclConfig.sh.in.orig     2018-04-09 22:23:23.738184327 +0800
++++ vectclConfig.sh.in  2015-07-09 04:38:34.000000000 +0800
+@@ -55,5 +55,5 @@
+
+ # String to pass to the compiler so that an extension can
+ # find installed VecTcl headers.
+-vectcl_INCLUDE_SPEC='@vectcl_INCLUDE_SPEC@'
++vectcl_INCLUDE_SPEC='/usr/include'
+ VECTCL_INCLUDE_SPEC='@vectcl_INCLUDE_SPEC@'
