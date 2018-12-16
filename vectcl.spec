@@ -4,7 +4,7 @@
 
 Name:          vectcl
 Summary:       A numerical array extension for Tcl
-Version:       0.2
+Version:       0.3
 Release:       1
 License:       TCL
 Group:         Development/Libraries/Tcl
@@ -62,14 +62,15 @@ rm -rf %buildroot
 
 %files
 %defattr(-,root,root)
-/usr/lib64/libvectcl0.2.so
+/usr/lib64/libvectcl0.3.so
 %tcl_noarchdir/%{name}%{version}
 
 %files devel
 %defattr(-,root,root)
 /usr/lib64/vectclConfig.sh
-/usr/lib64/libvectclstub0.2.a
+/usr/lib64/libvectclstub0.3.a
 /usr/include/hsfft.h
 /usr/include/nacomplex.h
 /usr/include/vectcl.h
+/usr/include/map.h
 
