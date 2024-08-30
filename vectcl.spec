@@ -40,10 +40,10 @@ This package contains development files for VecTcl.
 
 %prep
 %setup -q -n VecTcl-%{version}
-%patch0
+%patch 0
 
 %build
-%{__autoconf}
+autoconf
 ./configure \
 	--prefix=%{directory} \
 	--exec-prefix=%{directory} \
