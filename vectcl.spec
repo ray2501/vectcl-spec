@@ -10,6 +10,7 @@ License:       TCL
 Group:         Development/Libraries/Tcl
 Source:        VecTcl-%{version}.tar.gz
 Patch0:        makefile.patch
+Patch1:        intconv.h.patch
 URL:           https://github.com/auriocus/tksvg
 BuildRequires: autoconf
 BuildRequires: make
@@ -41,6 +42,7 @@ This package contains development files for VecTcl.
 %prep
 %setup -q -n VecTcl-%{version}
 %patch 0
+%patch 1
 
 %build
 autoconf
