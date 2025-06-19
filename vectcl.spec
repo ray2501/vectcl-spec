@@ -11,6 +11,7 @@ Group:         Development/Libraries/Tcl
 Source:        VecTcl-%{version}.tar.gz
 Patch0:        makefile.patch
 Patch1:        intconv.h.patch
+Patch2:        configure.in.patch
 URL:           https://github.com/auriocus/VecTcl
 BuildRequires: autoconf
 BuildRequires: make
@@ -43,6 +44,7 @@ This package contains development files for VecTcl.
 %setup -q -n VecTcl-%{version}
 %patch 0
 %patch 1
+%patch 2
 
 %build
 autoconf
